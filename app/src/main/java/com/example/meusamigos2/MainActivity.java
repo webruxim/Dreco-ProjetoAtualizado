@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 /** Instanciando AmigoDAO */
                 AmigoDAO dao = new AmigoDAO(getBaseContext());
                 boolean ok;
+                boolean ok2 = true;
 
                 /** Se estiver edianto, entra no if */
                 if (amigoEditado != null) {
@@ -106,21 +107,18 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     /** Se for um novo cadastro entra aqui */
                     ok = dao.salvar(nome, celular, status, sincronizado, fotoEmBytes);
-                    //dao.atualizarContatoMysql(nome, celular);
+                    if (ok) {
+                        ok2 = dao.atualizarContatoMysql(nome, celular);
+                    }
                 }
 
-                if(ok)
-                {
+                if (ok) {
                     Amigo amigo = dao.retornarUltimoAmigo();
 
-                    if (amigoEditado != null)
-                    {
+                    if (amigoEditado != null) {
                         adapter.atualizarAmigo(amigo);
                         amigoEditado = null;
-                    }
-                    else
-                    {
-
+                    } else {
                         adapter.adicionarAmigo(amigo);
                     }
 
@@ -136,10 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.fab).setVisibility(View.VISIBLE);
                     findViewById(R.id.include_amigos_listagem).setVisibility(View.VISIBLE);
                     findViewById(R.id.include_mensagens).setVisibility(View.INVISIBLE);
-
-                }
-                else
-                {
+                } else {
                     Snackbar.make(view, "Erro ao gravar os dados do Amigo ["+nome+"]", Snackbar.LENGTH_LONG)
                             .setAction("Inclusão", null).show();
                 }

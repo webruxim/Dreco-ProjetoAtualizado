@@ -24,12 +24,12 @@ public class AmigoDAO extends _Default {
         gw = DbGateway.getInstance(context);
     }
 
-    public void atualizarContatoMysql(String pNome, String pCelular) {
+    public boolean atualizarContatoMysql(String pNome, String pCelular) {
         List<Amigo> amigos = new ArrayList<>();
         Cursor cursor = null;
         DB db = new DB();
 
-        cursor = gw.getDatabase().rawQuery("SELECT * FROM Amigos WHERE Status = 1", null);
+        cursor = gw.getDatabase().rawQuery("SELECT * FROM Amigos WHERE Status <= 1", null);
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -41,15 +41,18 @@ public class AmigoDAO extends _Default {
                 byte[] imagemEmString = cursor.getBlob(cursor.getColumnIndex("Foto"));
 
                 if ((nome.equals(pNome)) && celular.equals(pCelular)) {
-                    boolean ok = db.insertAmigoMysql(id, nome, celular, status, imagemEmString);
+                    boolean ok = db.updateAmigoMysql(id, nome, celular, 1, imagemEmString);
                     if (ok) {
                         salvar(id, nome, celular, 1, 1, imagemEmString);
+                    } else {
+                        this._status = false;
                     }
                 }
 
             }
             cursor.close();
         }
+        return this._status;
     }
 
     public boolean salvar(String nome, String celular, Integer status, Integer sincronizado, byte[] pImagemEmString)
@@ -69,15 +72,7 @@ public class AmigoDAO extends _Default {
         }
 
         if (id > 0) {
-            if (status == 2) {
-                if (this._mysql) {
-                    return gw.getDatabase().update(TABLE_AMIGOS, cv, "ID = ?", new String[]{id + ""}) > 0;
-                } else {
-                    return gw.getDatabase().update(TABLE_AMIGOS, cv, "ID = ?", new String[]{id + ""}) > 0;
-                }
-            } else {
-                return gw.getDatabase().update(TABLE_AMIGOS, cv, "ID = ?", new String[]{id + ""}) > 0;
-            }
+            return gw.getDatabase().update(TABLE_AMIGOS, cv, "ID = ?", new String[]{id + ""}) > 0;
         } else {
             return gw.getDatabase().insert(TABLE_AMIGOS, null, cv) > 0;
         }

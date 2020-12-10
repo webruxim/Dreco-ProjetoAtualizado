@@ -160,9 +160,7 @@ public class DB extends _Default implements Runnable {
     public boolean insertAmigoMysql(int pId, String pNome, String pCelular, int pStatus, byte[] pImagemEmByte) {
         String query;
         String queryTipo;
-        int statusAtualizado = 0;
         ResultSet resultSet = null;
-        ResultSet resultSet2 = null;
         boolean existeRegistro = false;
         Statement statement = null;
 
@@ -170,41 +168,13 @@ public class DB extends _Default implements Runnable {
 
         try {
             statement = conn.createStatement();
-
-            query = "SELECT * FROM MeusAmigos WHERE RA = '5041480'";
-            queryTipo = "SELECT";
-
+            query = "INSERT INTO MeusAmigos (RA, Id, Nome, Apelido, Foto, " +
+                    "Dt_Nascimento, Sexo, Email, Celular, WhatsAPP, Telegram, Facebook, " +
+                    "Instagram, Twitter, Conexao, Excluido, Status) " +
+                    "VALUES ('5041480', '" + pId + "', '" + pNome + "', 'x','" + pImagemEmByte + "', '0', '0', 'x', " +
+                    "'" + pCelular + "', '0', '0', 'x', 'x', 'x', '0', '0', '" + pStatus + "')";
+            queryTipo = "INSERT";
             resultSet = new DBExecute(this.conn, query, queryTipo).execute().get();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("Id");
-                String nome = resultSet.getString("Nome");
-
-                if (id == pId) {
-                    existeRegistro = true;
-                    break;
-                }
-            }
-
-            if (existeRegistro) {
-                resultSet = null;
-                query = "UPDATE MeusAmigos SET Nome = '" + pNome + "', Foto = '" + pImagemEmByte + "', " +
-                        "Celular = '" + pCelular + "', Status = '" + pStatus + "' " +
-                        "WHERE RA = '5041480' AND Id = '" + pId + "'";
-                queryTipo = "UPDATE";
-                resultSet = new DBExecute(this.conn, query, queryTipo).execute().get();
-            } else {
-                resultSet = null;
-                query = "INSERT INTO MeusAmigos (RA, Id, Nome, Apelido, Foto, " +
-                        "Dt_Nascimento, Sexo, Email, Celular, WhatsAPP, Telegram, Facebook, " +
-                        "Instagram, Twitter, Conexao, Excluido, Status) " +
-                        "VALUES ('5041480', '" + pId + "', '" + pNome + "', 'x','" + pImagemEmByte + "', '0', '0', 'x', " +
-                        "'" + pCelular + "', '0', '0', 'x', 'x', 'x', '0', '0', '" + pStatus + "')";
-                queryTipo = "INSERT";
-                resultSet = new DBExecute(this.conn, query, queryTipo).execute().get();
-            }
-            resultSet = null;
-            resultSet2 = null;
         } catch (Exception e) {
             this._mensagem = e.getMessage();
             this._status = false;
@@ -214,7 +184,7 @@ public class DB extends _Default implements Runnable {
         return this._status;
     }
 
-    public boolean updateAmigoMysql(int pId, String pNome, String pCelular, int pStatus, byte[] pImagemEmString) {
+    public boolean updateAmigoMysql(int pId, String pNome, String pCelular, int pStatus, byte[] pImagemEmByte) {
         this.conectaMysql();
         String queryTipo = "";
         String query;
@@ -223,7 +193,9 @@ public class DB extends _Default implements Runnable {
 
         try {
             statement = conn.createStatement();
-            query = "UPDATE MeusAmigos SET Status = '" + pStatus + "' WHERE RA = '5041480' AND Id = '" + pId + "'";
+            query = "UPDATE MeusAmigos SET Nome = '" + pNome + "', Foto = '" + pImagemEmByte + "', " +
+                    "Celular = '" +  pCelular + "', Status = '" + pStatus + "' " +
+                    "WHERE RA = '5041480' AND Id = '" + pId + "'";
             queryTipo = "UPDATE";
             resultSet = new DBExecute(this.conn, query, queryTipo).execute().get();
         } catch (Exception e) {
