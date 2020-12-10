@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private byte[] fotoEmBytes;
     private boolean ListarDeletatosFisicos = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
