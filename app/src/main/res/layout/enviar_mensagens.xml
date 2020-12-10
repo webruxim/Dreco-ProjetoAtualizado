@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <EditText
+        android:id="@+id/txtNomeMensagem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="22dp"
+        android:inputType="textPersonName"
+        android:hint="Digite o Nome do Amigo" />
+
+    <EditText
+        android:id="@+id/txtNumeroMensagem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="18dp"
+        android:inputType="number"
+        android:hint="Digite o Celular do Amigo" />
+
+    <EditText
+        android:id="@+id/txtMensagem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="18dp"
+        android:hint="Digite a Mensagem aqui..."
+        android:inputType="textMultiLine"
+        android:lines="3" />
+
+    <Button
+        android:id="@+id/btnEnviarSms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar SMS"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnEnviarWhats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar para WhatApp" />
+
+    <Button
+        android:id="@+id/btnEnviarTelegran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar para Telegram" />
+
+    <Button
+        android:id="@+id/btnCancelarMensagem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>

@@ -125,7 +125,7 @@ public class AmigoDAO extends _Default {
                 cursorAux = gw.getDatabase().rawQuery("SELECT * FROM Amigos", null);
                 ok = sincronizarLocalMysql(cursorAux);
                 if (ok) {
-                    cursor = gw.getDatabase().rawQuery("SELECT * FROM Amigos WHERE Sincronizado = 1", null);
+                    cursor = gw.getDatabase().rawQuery("SELECT * FROM Amigos WHERE Status < 2", null);
                 }
                 break;
             case 5:
