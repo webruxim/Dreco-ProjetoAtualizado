@@ -369,21 +369,21 @@ public class MainActivity extends AppCompatActivity {
 
         if (listarDeletatos) {
             tituloLista.setText("Lista de Amigos Deletados");
-            adapter = new AmigoAdapter(dao.retornarAmigos(1), 4, false);
+            adapter = new AmigoAdapter(dao.retornarAmigos(1), "listarDeletatos", false);
         } else if (ListarDeletatosFisicos) {
             tituloLista.setText("Lista de Deletados Fisico");
-            adapter = new AmigoAdapter(dao.retornarAmigos(2), 6, false);
+            adapter = new AmigoAdapter(dao.retornarAmigos(2), "ListarDeletatosFisicos", false);
         } else if (listarMysql) {
-            adapter = new AmigoAdapter(dao.retornarAmigos(3), 5, true);
+            adapter = new AmigoAdapter(dao.retornarAmigos(3), "listarMysql", true);
         } else if (sincronizarLocalMysql) {
             tituloLista.setText("Amigos Sincronizados com Mysql");
-            adapter = new AmigoAdapter(dao.retornarAmigos(4), 5, true);
+            adapter = new AmigoAdapter(dao.retornarAmigos(4), "sincronizarLocalMysql", true);
         } else if (sincronizarMysqlLocal) {
             tituloLista.setText("Lista Recuperar Amigos");
-            adapter = new AmigoAdapter(dao.retornarAmigos(5), 4, true);
+            adapter = new AmigoAdapter(dao.retornarAmigos(5), "sincronizarMysqlLocal", true);
         } else {
             tituloLista.setText("Lista de Amigos");
-            adapter = new AmigoAdapter(dao.retornarAmigos(0), 0, false);
+            adapter = new AmigoAdapter(dao.retornarAmigos(0), "listaAmigos", false);
         }
 
         recyclerView.setAdapter(adapter);

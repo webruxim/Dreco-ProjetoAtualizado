@@ -1,0 +1,40 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.meusamigos2.MainActivity">
+    <item
+        android:id="@+id/listar_amigos"
+        android:title="Listar Amigos"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/listar_amigos_deletados"
+        android:title="Listar Amigos Deletados"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/listar_amigos_deletados_fisico"
+        android:title="Listar Amigos Deletados Fisico"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/listar_amigos_mysql"
+        android:title="Listar Amigos Mysql"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sincronizar_local_para_mysql"
+        android:title="Sincronizar LOCAL --> MYSQL"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sincronizar_mysql_para_local"
+        android:title="Recuperar Registros Deletados"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/finalizar_app"
+        android:title="Finalizar Aplicativo"
+        app:showAsAction="never" />
+
+</menu>

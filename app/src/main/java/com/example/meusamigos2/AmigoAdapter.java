@@ -27,12 +27,12 @@ import java.util.List;
 public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
 
     private final List<Amigo> amigos;
-    private int escondeBotoes;
+    private String telaAtiva;
     public boolean mysql = false;
 
-    public AmigoAdapter(List<Amigo> amigos, int botoes, boolean mysql) {
+    public AmigoAdapter(List<Amigo> amigos, String telaAtiva, boolean mysql) {
         this.amigos = amigos;
-        this.escondeBotoes = botoes;
+        this.telaAtiva = telaAtiva;
         this.mysql = mysql;
     }
 
@@ -61,57 +61,62 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
         holder.txvAmigoCelular.setText(amigos.get(posicao).getCelular());
 
         if (amigos.get(posicao).getImagemEmBitmap() == null) {
-            holder.avatar.setImageResource(R.drawable.ic_photo_camera_24);
+            holder.avatar.setImageResource(R.drawable.ic_person_24);
         } else {
             holder.avatar.setImageBitmap(amigos.get(posicao).getImagemEmBitmap());
         }
 
-        switch (escondeBotoes) {
-            case 0:
-                holder.btnTelegram.setVisibility(View.VISIBLE);
-                holder.btnSms.setVisibility(View.VISIBLE);
-                holder.btnZap.setVisibility(View.VISIBLE);
-                holder.btnLigar.setVisibility(View.VISIBLE);
+        switch (telaAtiva) {
+            case "listarDeletatos":
+                holder.btnTelegram.setVisibility(View.INVISIBLE);
+                holder.btnSms.setVisibility(View.INVISIBLE);
+                holder.btnZap.setVisibility(View.INVISIBLE);
+                holder.btnLigar.setVisibility(View.INVISIBLE);
                 holder.btnEditar.setVisibility(View.VISIBLE);
                 holder.btnRemover.setVisibility(View.VISIBLE);
                 holder.btnEditar.setImageResource(R.drawable.ic_restore_24);
                 break;
-            case 1:
-                holder.btnTelegram.setVisibility(View.INVISIBLE);
-                holder.btnEditar.setImageResource(R.drawable.ic_restore_24);
-                break;
-            case 2:
-                holder.btnTelegram.setVisibility(View.INVISIBLE);
-                holder.btnSms.setVisibility(View.INVISIBLE);
-                holder.btnEditar.setImageResource(R.drawable.ic_restore_24);
-                break;
-            case 3:
-                holder.btnTelegram.setVisibility(View.INVISIBLE);
-                holder.btnSms.setVisibility(View.INVISIBLE);
-                holder.btnZap.setVisibility(View.INVISIBLE);
-                holder.btnEditar.setImageResource(R.drawable.ic_restore_24);
-                break;
-            case 4:
-                holder.btnTelegram.setVisibility(View.INVISIBLE);
-                holder.btnSms.setVisibility(View.INVISIBLE);
-                holder.btnZap.setVisibility(View.INVISIBLE);
-                holder.btnLigar.setVisibility(View.INVISIBLE);
-                holder.btnEditar.setImageResource(R.drawable.ic_restore_24);
-                break;
-            case 5:
-                holder.btnTelegram.setVisibility(View.INVISIBLE);
-                holder.btnSms.setVisibility(View.INVISIBLE);
-                holder.btnZap.setVisibility(View.INVISIBLE);
-                holder.btnLigar.setVisibility(View.INVISIBLE);
-                holder.btnEditar.setVisibility(View.INVISIBLE);
-                break;
-            case 6:
+            case "ListarDeletatosFisicos":
                 holder.btnTelegram.setVisibility(View.INVISIBLE);
                 holder.btnSms.setVisibility(View.INVISIBLE);
                 holder.btnZap.setVisibility(View.INVISIBLE);
                 holder.btnLigar.setVisibility(View.INVISIBLE);
                 holder.btnEditar.setVisibility(View.INVISIBLE);
                 holder.btnRemover.setVisibility(View.INVISIBLE);
+                break;
+            case "listarMysql":
+                holder.btnTelegram.setVisibility(View.INVISIBLE);
+                holder.btnSms.setVisibility(View.INVISIBLE);
+                holder.btnZap.setVisibility(View.INVISIBLE);
+                holder.btnLigar.setVisibility(View.INVISIBLE);
+                holder.btnEditar.setVisibility(View.VISIBLE);
+                holder.btnRemover.setVisibility(View.INVISIBLE);
+                holder.btnEditar.setImageResource(R.drawable.ic_restore_24);
+                break;
+            case "sincronizarLocalMysql":
+                holder.btnTelegram.setVisibility(View.INVISIBLE);
+                holder.btnSms.setVisibility(View.INVISIBLE);
+                holder.btnZap.setVisibility(View.INVISIBLE);
+                holder.btnLigar.setVisibility(View.INVISIBLE);
+                holder.btnEditar.setVisibility(View.INVISIBLE);
+                holder.btnRemover.setVisibility(View.INVISIBLE);
+                break;
+            case "sincronizarMysqlLocal":
+                holder.btnTelegram.setVisibility(View.INVISIBLE);
+                holder.btnSms.setVisibility(View.INVISIBLE);
+                holder.btnZap.setVisibility(View.INVISIBLE);
+                holder.btnLigar.setVisibility(View.INVISIBLE);
+                holder.btnEditar.setVisibility(View.INVISIBLE);
+                holder.btnRemover.setVisibility(View.INVISIBLE);
+                break;
+            case "listaAmigos":
+                holder.btnTelegram.setVisibility(View.VISIBLE);
+                holder.btnSms.setVisibility(View.VISIBLE);
+                holder.btnZap.setVisibility(View.VISIBLE);
+                holder.btnLigar.setVisibility(View.VISIBLE);
+                holder.btnEditar.setVisibility(View.VISIBLE);
+                holder.btnRemover.setVisibility(View.VISIBLE);
+                holder.btnEditar.setImageResource(R.drawable.ic_edit_24);
                 break;
         }
 

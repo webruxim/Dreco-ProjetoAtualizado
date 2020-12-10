@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_recycler_editar"
+        android:icon="@drawable/ic_edit_24"
+        android:title="Editar" />
+
+    <item
+        android:id="@+id/menu_recycler_deletar"
+        android:icon="@drawable/ic_delete_24"
+        android:title="Deletar" />
+
+    <item
+        android:id="@+id/menu_recycler_mensagens"
+        android:icon="@drawable/ic_sms_24"
+        android:title="Mensagens" />
+
+    <item
+        android:id="@+id/menu_recycler_ligar"
+        android:icon="@drawable/ic_call_24"
+        android:title="Ligar" />
+
+</menu>
