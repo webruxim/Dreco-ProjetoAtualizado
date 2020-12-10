@@ -90,9 +90,9 @@ public class Amigo implements Serializable
 
     public void setImagemEmbyte(byte[] imagemEmbyte) {
         this.imagemEmbyte = imagemEmbyte;
-        // if (this.imagemEmbyte != null) {
-        //      setImagemEmBitmap(Auxilio.getImagemBytes(this.imagemEmbyte));
-        // }
+         if (this.imagemEmbyte != null) {
+              setImagemEmBitmap(Auxilio.getImagemBytes(this.imagemEmbyte));
+         }
     }
 
     public Bitmap getImagemEmBitmap() {

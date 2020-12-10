@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.graphics.Bitmap;
 import android.net.Uri;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,31 +33,26 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
     }
 
     @Override
-    public AmigoHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public AmigoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new AmigoHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.amigos_dados, parent, false));
     }
 
-    private Activity getActivity(View v)
-    {
+    private Activity getActivity(View v) {
         Context c = v.getContext();
 
-        while (c instanceof ContextWrapper)
-        {
-            if (c instanceof ContextWrapper)
-            {
+        while (c instanceof ContextWrapper) {
+            if (c instanceof ContextWrapper) {
                 return (Activity) c;
             }
-            c = ((ContextWrapper)c).getBaseContext();
+            c = ((ContextWrapper) c).getBaseContext();
         }
         return null;
     }
 
 
     @Override
-    public void onBindViewHolder (final AmigoHolder holder, int posicao)
-    {
+    public void onBindViewHolder(final AmigoHolder holder, int posicao) {
         holder.txvAmigo.setText(amigos.get(posicao).getNome());
         holder.txvAmigoCelular.setText(amigos.get(posicao).getCelular());
 
@@ -121,99 +114,82 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
         final Amigo amigo = amigos.get(posicao);
 
         holder.btnEditar.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    if (mysql) {
-                                                        final View view = v;
-                                                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+            @Override
+            public void onClick(View v) {
+                if (mysql) {
 
-                                                        if (amigo.getStatus() == 3) {
-                                                            builder.setTitle("Confirmação de Resgate")
-                                                                    .setMessage("Tem certeza de que deseja recuperar seu amigo?")
-                                                                    .setPositiveButton("Resgatar", new DialogInterface.OnClickListener() {
-                                                                        @Override
-                                                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                                                            AmigoDAO dao = new AmigoDAO(view.getContext());
+                    final View view = v;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
-                                                                            boolean ok = dao.salvar(amigo.getId(), amigo.getNome(), amigo.getCelular(), amigo.getStatus(), amigo.getSincronizado(), amigo.getImagemEmbyte());
+                    if (amigo.getStatus() == 3) {
+                        builder.setTitle("Confirmação de Resgate")
+                                .setMessage("Tem certeza de que deseja recuperar seu amigo?")
+                                .setPositiveButton("Resgatar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                                                                            if (ok) {
-                                                                                deletarAmigo(amigo);
-                                                                                Snackbar.make(view, "Amigo recuperado! :-(((", Snackbar.LENGTH_LONG)
-                                                                                        .setAction("Ação", null).show();
-                                                                            } else {
-                                                                                Snackbar.make(view, "Erro ao recuperar o amigo!", Snackbar.LENGTH_LONG)
-                                                                                        .setAction("Ação", null).show();
-                                                                            }
-                                                                        }
-                                                                    })
-                                                                    .setNegativeButton("Cancelar", null)
-                                                                    .create()
-                                                                    .show();
-                                                        } else {
-                                                            amigo.setImagemEmBitmap(null);
-                                                            Activity activity = getActivity(view);
-                                                            Intent intent = activity.getIntent();
-                                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                                            intent.putExtra("amigoEditar", amigo);
-                                                            activity.finish();
-                                                            activity.startActivity(intent);
-                                                        }
-                                                    } else {
-                                                        final View view = v;
-                                                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                        AmigoDAO dao = new AmigoDAO(view.getContext());
 
-                                                        if (amigo.getStatus() == 2) {
-                                                            builder.setTitle("Confirmação de Resgate")
-                                                                    .setMessage("Tem certeza de que deseja recuperar seu amigo?")
-                                                                    .setPositiveButton("Resgatar", new DialogInterface.OnClickListener() {
-                                                                        @Override
-                                                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                                                            AmigoDAO dao = new AmigoDAO(view.getContext());
+                                        boolean ok = dao.salvar(amigo.getId(), amigo.getNome(), amigo.getCelular(), 0, 1, amigo.getImagemEmbyte());
 
-                                                                            Bitmap fotoRegistrada = amigo.getImagemEmBitmap();
-                                                                            ByteArrayOutputStream streamDaFotoEmBytes = new ByteArrayOutputStream();
-                                                                            fotoRegistrada.compress(Bitmap.CompressFormat.PNG, 50, streamDaFotoEmBytes);
-                                                                            byte[] fotoEmBytes = streamDaFotoEmBytes.toByteArray();
-                                                                            amigo.setImagemEmBitmap(null);
-                                                                            amigo.setImagemEmbyte(fotoEmBytes);
-                                                                            boolean ok = dao.salvar(amigo.getId(), amigo.getNome(), amigo.getCelular(), amigo.getStatus(), amigo.getSincronizado(), amigo.getImagemEmbyte());
+                                        if (ok) {
+                                            deletarAmigo(amigo);
+                                            Snackbar.make(view, "Amigo recuperado! :-)) \\o/  \\o/", Snackbar.LENGTH_LONG)
+                                                    .setAction("Ação", null).show();
+                                        } else {
+                                            Snackbar.make(view, "Erro ao recuperar o amigo!", Snackbar.LENGTH_LONG)
+                                                    .setAction("Ação", null).show();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", null)
+                                .create()
+                                .show();
+                    }
+                } else {
 
-                                                                            if (ok) {
-                                                                                deletarAmigo(amigo);
-                                                                                Snackbar.make(view, "Amigo recuperado! :-)  \\o/   \\o/", Snackbar.LENGTH_LONG)
-                                                                                        .setAction("Ação", null).show();
-                                                                            } else {
-                                                                                Snackbar.make(view, "Erro ao recuperar o amigo!", Snackbar.LENGTH_LONG)
-                                                                                        .setAction("Ação", null).show();
-                                                                            }
-                                                                        }
-                                                                    })
-                                                                    .setNegativeButton("Cancelar", null)
-                                                                    .create()
-                                                                    .show();
-                                                        } else {
+                    final View view = v;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
-                                                            Bitmap fotoRegistrada = amigo.getImagemEmBitmap();
-                                                            ByteArrayOutputStream streamDaFotoEmBytes = new ByteArrayOutputStream();
-                                                            fotoRegistrada.compress(Bitmap.CompressFormat.PNG, 50, streamDaFotoEmBytes);
-                                                            byte[] fotoEmBytes = streamDaFotoEmBytes.toByteArray();
-                                                            amigo.setImagemEmBitmap(null);
-                                                            amigo.setImagemEmbyte(fotoEmBytes);
+                    if (amigo.getStatus() == 2) {
+                        builder.setTitle("Confirmação de Resgate")
+                                .setMessage("Tem certeza de que deseja recuperar seu amigo?")
+                                .setPositiveButton("Resgatar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        AmigoDAO dao = new AmigoDAO(view.getContext());
 
-                                                            Activity activity = getActivity(view);
-                                                            Intent intent = activity.getIntent();
-                                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                                            intent.putExtra("amigoEditar", amigo);
-                                                            activity.finish();
-                                                            activity.startActivity(intent);
+                                        boolean ok = dao.salvar(amigo.getId(), amigo.getNome(), amigo.getCelular(), amigo.getStatus(), amigo.getSincronizado(), amigo.getImagemEmbyte());
 
-                                                        }
-                                                    }
+                                        if (ok) {
+                                            deletarAmigo(amigo);
+                                            Snackbar.make(view, "Amigo recuperado! :-))  \\o/   \\o/", Snackbar.LENGTH_LONG)
+                                                    .setAction("Ação", null).show();
+                                        } else {
+                                            Snackbar.make(view, "Erro ao recuperar o amigo!", Snackbar.LENGTH_LONG)
+                                                    .setAction("Ação", null).show();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", null)
+                                .create()
+                                .show();
+                    } else {
+                        if (amigo.getImagemEmBitmap() != null) {
+                            amigo.setImagemEmbyte(Auxilio.getImagemBitmap(amigo.getImagemEmBitmap()));
+                            amigo.setImagemEmBitmap(null);
+                        }
+                        Activity activity = getActivity(view);
+                        Intent intent = activity.getIntent();
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("amigoEditar", amigo);
+                        activity.finish();
+                        activity.startActivity(intent);
+                    }
+                }
 
-                                                }
-                                            }
-        );
+            }
+        });
 
         holder.btnRemover.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -327,25 +303,21 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return amigos != null ? amigos.size() : 0;
     }
 
-    public void adicionarAmigo(Amigo amigo)
-    {
+    public void adicionarAmigo(Amigo amigo) {
         amigos.add(amigo);
         notifyItemInserted(getItemCount());
     }
 
-    public void atualizarAmigo(Amigo amigo)
-    {
+    public void atualizarAmigo(Amigo amigo) {
         amigos.set(amigos.indexOf(amigo), amigo);
         notifyItemChanged(amigos.indexOf(amigo));
     }
 
-    public void deletarAmigo (Amigo amigo)
-    {
+    public void deletarAmigo(Amigo amigo) {
         int posicao = amigos.indexOf(amigo);
         amigos.remove(posicao);
         notifyItemRemoved(posicao);

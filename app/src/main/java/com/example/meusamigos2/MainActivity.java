@@ -103,7 +103,10 @@ public class MainActivity extends AppCompatActivity {
 
                 /** Se estiver edianto, entra no if */
                 if (amigoEditado != null) {
-                    ok = dao.salvar (amigoEditado.getId(), nome, celular, status, amigoEditado.getSincronizado(), fotoEmBytes);
+                    if (fotoEmBytes != null) {
+                        amigoEditado.setImagemEmbyte(fotoEmBytes);
+                    }
+                    ok = dao.salvar (amigoEditado.getId(), nome, celular, status, amigoEditado.getSincronizado(), amigoEditado.getImagemEmbyte());
                 } else {
                     /** Se for um novo cadastro entra aqui */
                     ok = dao.salvar(nome, celular, status, sincronizado, fotoEmBytes);
@@ -233,7 +236,9 @@ public class MainActivity extends AppCompatActivity {
 
             edtNome.setText(amigoEditado.getNome());
             edtCelular.setText(amigoEditado.getCelular());
-            avatar.setImageBitmap(Auxilio.getImagemBytes(amigoEditado.getImagemEmbyte()));
+            if (amigoEditado.getImagemEmbyte() != null) {
+                avatar.setImageBitmap(Auxilio.getImagemBytes(amigoEditado.getImagemEmbyte()));
+            }
         }
 
         if ((intent.hasExtra("mensagens")))
