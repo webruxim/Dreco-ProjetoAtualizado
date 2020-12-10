@@ -1,0 +1,3 @@
+include ':Mysqlconnector'
+include ':app'
+rootProject.name = "MeusAmigos2"
