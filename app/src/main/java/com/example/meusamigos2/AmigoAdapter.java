@@ -1,16 +1,20 @@
 package com.example.meusamigos2;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -135,10 +139,16 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
                                         if (ok) {
                                             deletarAmigo(amigo);
                                             Snackbar.make(view, "Amigo recuperado! :-)) \\o/  \\o/", Snackbar.LENGTH_LONG)
-                                                    .setAction("Ação", null).show();
+                                                    .setAction("Ação", null)
+                                                    .setBackgroundTint(Color.parseColor("#3700B3"))
+                                                    .setTextColor(Color.WHITE)
+                                                    .show();
                                         } else {
                                             Snackbar.make(view, "Erro ao recuperar o amigo!", Snackbar.LENGTH_LONG)
-                                                    .setAction("Ação", null).show();
+                                                    .setAction("Ação", null)
+                                                    .setBackgroundTint(Color.parseColor("#FF0000"))
+                                                    .setTextColor(Color.WHITE)
+                                                    .show();
                                         }
                                     }
                                 })
@@ -159,15 +169,21 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         AmigoDAO dao = new AmigoDAO(view.getContext());
 
-                                        boolean ok = dao.salvar(amigo.getId(), amigo.getNome(), amigo.getCelular(), amigo.getStatus(), amigo.getSincronizado(), amigo.getImagemEmbyte());
+                                        boolean ok = dao.updateAmigo(amigo.getId(), 1);
 
                                         if (ok) {
                                             deletarAmigo(amigo);
                                             Snackbar.make(view, "Amigo recuperado! :-))  \\o/   \\o/", Snackbar.LENGTH_LONG)
-                                                    .setAction("Ação", null).show();
+                                                    .setAction("Ação", null)
+                                                    .setBackgroundTint(Color.parseColor("#3700B3"))
+                                                    .setTextColor(Color.WHITE)
+                                                    .show();
                                         } else {
                                             Snackbar.make(view, "Erro ao recuperar o amigo!", Snackbar.LENGTH_LONG)
-                                                    .setAction("Ação", null).show();
+                                                    .setAction("Ação", null)
+                                                    .setBackgroundTint(Color.parseColor("#FF0000"))
+                                                    .setTextColor(Color.WHITE)
+                                                    .show();
                                         }
                                     }
                                 })
@@ -215,10 +231,16 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
                                     if (ok) {
                                         deletarAmigo(amigo);
                                         Snackbar.make(view, "Amigo excluído! :-(((", Snackbar.LENGTH_LONG)
-                                                .setAction("Ação", null).show();
+                                                .setAction("Ação", null)
+                                                .setBackgroundTint(Color.parseColor("#FF0000"))
+                                                .setTextColor(Color.WHITE)
+                                                .show();
                                     } else {
                                         Snackbar.make(view, "Erro ao excluir o amigo!", Snackbar.LENGTH_LONG)
-                                                .setAction("Ação", null).show();
+                                                .setAction("Ação", null)
+                                                .setBackgroundTint(Color.parseColor("#FF0000"))
+                                                .setTextColor(Color.WHITE)
+                                                .show();
                                     }
                                 }
                             })
@@ -238,18 +260,24 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
 
                                     boolean ok;
                                     if (amigo.getStatus() == 2) {
-                                        ok = dao.deletar(amigo.getId(), 3);
+                                        ok = dao.updateAmigo(amigo.getId(), 3);
                                     } else {
-                                        ok = dao.deletar(amigo.getId(), 2);
+                                        ok = dao.updateAmigo(amigo.getId(), 2);
                                     }
 
                                     if (ok) {
                                         deletarAmigo(amigo);
                                         Snackbar.make(view, "Amigo excluído! :-(((", Snackbar.LENGTH_LONG)
-                                                .setAction("Ação", null).show();
+                                                .setAction("Ação", null)
+                                                .setBackgroundTint(Color.parseColor("#FF0000"))
+                                                .setTextColor(Color.WHITE)
+                                                .show();
                                     } else {
                                         Snackbar.make(view, "Erro ao excluir o amigo!", Snackbar.LENGTH_LONG)
-                                                .setAction("Ação", null).show();
+                                                .setAction("Ação", null)
+                                                .setBackgroundTint(Color.parseColor("#FF0000"))
+                                                .setTextColor(Color.WHITE)
+                                                .show();
                                     }
                                 }
                             })
@@ -278,7 +306,10 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
         holder.btnSms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                amigo.setImagemEmBitmap(null);
+                if (amigo.getImagemEmBitmap() != null) {
+                    amigo.setImagemEmbyte(Auxilio.getImagemBitmap(amigo.getImagemEmBitmap()));
+                    amigo.setImagemEmBitmap(null);
+                }
                 Activity activity = getActivity(v);
                 Intent intent = activity.getIntent();
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -291,13 +322,27 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoHolder> {
         holder.btnZap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                amigo.setImagemEmBitmap(null);
+                if (amigo.getImagemEmBitmap() != null) {
+                    amigo.setImagemEmbyte(Auxilio.getImagemBitmap(amigo.getImagemEmBitmap()));
+                    amigo.setImagemEmBitmap(null);
+                }
                 Activity activity = getActivity(v);
                 Intent intent = activity.getIntent();
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("mensagens", amigo);
                 activity.finish();
                 activity.startActivity(intent);
+            }
+        });
+
+        holder.btnTelegram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "FALTA IMPLEMENTAR", Snackbar.LENGTH_LONG)
+                        .setAction("Ação", null)
+                        .setBackgroundTint(Color.parseColor("#FF6F00"))
+                        .setTextColor(Color.WHITE)
+                        .show();
             }
         });
     }

@@ -3,6 +3,7 @@ package com.example.meusamigos2;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -130,7 +131,10 @@ public class MainActivity extends AppCompatActivity {
                     fotoAvatar.setImageResource(R.drawable.ic_photo_camera_24);
 
                     Snackbar.make(view, "Amigo salvo com sucesso!", Snackbar.LENGTH_LONG)
-                            .setAction("Inclusão", null).show();
+                            .setAction("Inclusão", null)
+                            .setBackgroundTint(Color.parseColor("#3700B3"))
+                            .setTextColor(Color.WHITE)
+                            .show();
 
                     findViewById(R.id.includemain).setVisibility(View.VISIBLE);
                     findViewById(R.id.includecadastro).setVisibility(View.INVISIBLE);
@@ -139,7 +143,10 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.include_mensagens).setVisibility(View.INVISIBLE);
                 } else {
                     Snackbar.make(view, "Erro ao gravar os dados do Amigo ["+nome+"]", Snackbar.LENGTH_LONG)
-                            .setAction("Inclusão", null).show();
+                            .setAction("Inclusão", null)
+                            .setBackgroundTint(Color.parseColor("#FF0000"))
+                            .setTextColor(Color.WHITE)
+                            .show();
                 }
             }
         });

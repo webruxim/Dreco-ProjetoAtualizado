@@ -82,7 +82,7 @@ public class AmigoDAO extends _Default {
         return gw.getDatabase().delete(TABLE_AMIGOS, "ID = ?", new String[] { id + ""}) > 0;
     }
 
-    public boolean deletar(int id, int status) {
+    public boolean updateAmigo(int id, int status) {
         ContentValues cv = new ContentValues();
         cv.put("Status", status);
         return gw.getDatabase().update(TABLE_AMIGOS, cv, "ID = ?", new String[] {id + "" }) > 0;
@@ -100,7 +100,7 @@ public class AmigoDAO extends _Default {
         switch (num) {
             case 0:
                 /** lista normal */
-                cursor = gw.getDatabase().rawQuery("SELECT * FROM Amigos WHERE Status <= 1", null);
+                cursor = gw.getDatabase().rawQuery("SELECT * FROM Amigos WHERE Status < 2", null);
                 break;
             case 1:
                 /** Lista Deletados pela primeira vez */
